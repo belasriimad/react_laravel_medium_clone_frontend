@@ -1,0 +1,12 @@
+.ql-editor {
+    overflow-y: scroll;
+    resize: vertical;
+}
+
+pre.ql-syntax {
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: scroll;
+    border-radius: 5px;
+    padding: 35px;
+}
