@@ -10,24 +10,26 @@ import Spinner from '../../layouts/Spinner'
 export default function UserArticles() {
     const { token } = useSelector(state => state.user)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const navigate = useNavigate()    
     const [articles, setArticles] = useState([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        const getLoggedInUser = async () => {
-            setLoading(true)
-            try {
-                const response = await axios.get(`${BASE_URL}/user/articles`, getConfig(token))
+        fetchUserArticles()
+    }, [])
+
+    const fetchUserArticles = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`${BASE_URL}/user/articles`,
+              getConfig(token))
                 setArticles(response.data.data)
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
                 console.log(error)
-            }
         }
-        getLoggedInUser()
-    }, [])
+    }
 
     const deleteArticle = async (slug) => {
         try {
@@ -38,7 +40,7 @@ export default function UserArticles() {
               }else {
                 dispatch(setCurrentUser(response.data.user))
                 toast.success(response.data.message)
-                navigate('/profile')
+                fetchUserArticles()
               }
             } catch (error) {
             console.log(error)
@@ -48,9 +50,10 @@ export default function UserArticles() {
     return (
         <div className="col-md-9">
             {
-                loading ? <div className="d-flex justify-content-center">
-                    <Spinner />
-                </div>
+                loading ?
+                    <div className="d-flex justify-content-center">
+                        <Spinner />
+                    </div>
                 :
                 articles?.length ?
                     <table className='table table-responsive'>

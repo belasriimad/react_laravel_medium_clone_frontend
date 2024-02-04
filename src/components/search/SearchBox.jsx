@@ -7,13 +7,13 @@ export default function SearchBox() {
     const [searchTerm, setSearTerm] = useState('')
     const [message, setMessage] = useState('')
     const [articles, setArticles] = useState([])
-    const [loading, setLaoding] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const searchArticles = async (e) => {
         e.preventDefault()
         setArticles([])
         setMessage('')
-        setLaoding(true)
+        setLoading(true)
 
         const data = { searchTerm }
 
@@ -25,10 +25,10 @@ export default function SearchBox() {
                 }else {
                     setMessage('No results found.')
                 }
-                setLaoding(false)
+                setLoading(false)
                 setSearTerm('')
             } catch (error) {
-                setLaoding(false)
+                setLoading(false)
                 setSearTerm('')
                 console.log(error)
         }
