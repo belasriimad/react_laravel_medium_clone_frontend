@@ -24,12 +24,12 @@ export default function UserArticles() {
         try {
             const response = await axios.get(`${BASE_URL}/user/articles`,
               getConfig(token))
-                if (response.data.data.length) {
-                    setArticles(response.data.data)
-                }else {
-                    setMessage('No articles found.')
-                }
-                setLoading(false)
+              if (response.data.data.length) {
+                setArticles(response.data.data)
+              }else {
+                setMessage('No articles found')
+              }
+              setLoading(false)
             } catch (error) {
                 setLoading(false)
                 console.log(error)
@@ -64,7 +64,7 @@ export default function UserArticles() {
                     <div className="alert alert-info">
                         { message }
                     </div>
-                    :
+                :
                     <table className='table table-responsive'>
                         <caption>List of published articles</caption>
                         <thead>

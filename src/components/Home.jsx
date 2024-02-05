@@ -12,8 +12,8 @@ export default function Home() {
   const { token, isLoggedIn } = useSelector(state => state.user)
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(false)
-  const [articleByTag, setArticleByTag] = useState('')
   const [message, setMessage] = useState('')
+  const [articleByTag, setArticleByTag] = useState('')
   const [articleByFollowing, setArticleByFollowing] = useState(false)
   const [meta, setMeta] = useState({
     to: 0,
@@ -34,8 +34,8 @@ export default function Home() {
             setArticles(response.data.data)
             setMeta(response.data.meta)
           }else {
-            setMessage('No articles found.')
-          }  
+            setMessage('No articles found')
+          }
           setLoading(false)
         } else if (articleByFollowing) {
           const response = await axios.get(`${BASE_URL}/followings/articles`,
@@ -44,8 +44,8 @@ export default function Home() {
             setArticles(response.data.data)
             setMeta(response.data.meta)
           }else {
-            setMessage('No articles found.')
-          }  
+            setMessage('No articles found')
+          }
           setLoading(false)
         } else {
           const response = await axios.get(`${BASE_URL}/articles`)
@@ -101,17 +101,17 @@ export default function Home() {
           }
           {/* display all the published articles */}
           {
-            message ?
+            message ? 
               <div className="col-md-8">
                 <div className="alert alert-info">
-                  No articles found
+                  { message }
                 </div>
               </div>
-              :
+            :
             <ArticleList articles={articles} 
               fetchNextArticles={fetchNextArticles}
               meta={meta}  
-          />
+            />
           }
           {/* display all the tags */}
           <Tags setArticleByTag={setArticleByTag}

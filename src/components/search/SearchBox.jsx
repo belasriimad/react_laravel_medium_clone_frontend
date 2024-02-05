@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { BASE_URL } from '../../helpers/config'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function SearchBox() {
     const [searchTerm, setSearTerm] = useState('')
@@ -91,7 +91,7 @@ export default function SearchBox() {
                                         { article.title }
                                     </span>
                                     <button onClick={() => viewArticleDetails(article.slug)}
-                                        className='text-decoration-none btn btn-link text-primary'>
+                                        className=' btn bt-link text-decoration-none text-primary'>
                                         View
                                     </button>
                                 </div>
