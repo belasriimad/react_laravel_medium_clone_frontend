@@ -1,13 +1,14 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { BASE_URL } from '../../helpers/config'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function SearchBox() {
     const [searchTerm, setSearTerm] = useState('')
     const [message, setMessage] = useState('')
     const [articles, setArticles] = useState([])
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const searchArticles = async (e) => {
         e.preventDefault()
@@ -32,6 +33,11 @@ export default function SearchBox() {
                 setSearTerm('')
                 console.log(error)
         }
+    }
+
+    const viewArticleDetails = (slug) => {
+        navigate(`/articles/${slug}`)
+        setArticles([])
     }
 
     return (
@@ -84,10 +90,10 @@ export default function SearchBox() {
                                     <span>
                                         { article.title }
                                     </span>
-                                    <Link to={`/articles/${article.slug}`}
-                                        className='text-decoration-none text-primary'>
+                                    <button onClick={() => viewArticleDetails(article.slug)}
+                                        className='text-decoration-none btn btn-link text-primary'>
                                         View
-                                    </Link>
+                                    </button>
                                 </div>
                             </li>
                         ))

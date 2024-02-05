@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { setCurrentUser } from '../../../redux/slices/userSlice'
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -10,20 +10,25 @@ import Spinner from '../../layouts/Spinner'
 export default function UserArticles() {
     const { token } = useSelector(state => state.user)
     const dispatch = useDispatch()
-    const navigate = useNavigate()    
     const [articles, setArticles] = useState([])
     const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState('')
 
     useEffect(() => {
         fetchUserArticles()
     }, [])
 
     const fetchUserArticles = async () => {
+        setMessage('')
         setLoading(true)
         try {
             const response = await axios.get(`${BASE_URL}/user/articles`,
               getConfig(token))
-                setArticles(response.data.data)
+                if (response.data.data.length) {
+                    setArticles(response.data.data)
+                }else {
+                    setMessage('No articles found.')
+                }
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
@@ -55,7 +60,11 @@ export default function UserArticles() {
                         <Spinner />
                     </div>
                 :
-                articles?.length ?
+                message ?
+                    <div className="alert alert-info">
+                        { message }
+                    </div>
+                    :
                     <table className='table table-responsive'>
                         <caption>List of published articles</caption>
                         <thead>
@@ -111,10 +120,6 @@ export default function UserArticles() {
                             }
                         </tbody>
                     </table>
-                :
-                <div className="alert alert-info">
-                    No articles found.
-                </div>
             }
         </div>
     )

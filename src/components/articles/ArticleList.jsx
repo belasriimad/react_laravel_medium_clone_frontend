@@ -25,14 +25,10 @@ export default function ArticleList({articles, fetchNextArticles, meta}) {
     return (
         <div className='col-md-8'>
             {
-                articles?.length ? articles?.map(article => (
+                articles?.map(article => (
                     <ArticleListItem article={article}
                         key={article.id} />
                 ))
-                :
-                <div className="alert alert-info">
-                    No article found.
-                </div>
             }
         </div>
     )
